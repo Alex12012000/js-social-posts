@@ -39,8 +39,31 @@ const post = [
 ]
 
 
-let postContainer = document.getElementById('container'); //Variabile che richiama il container dei post nel DOM
+const postContainer = document.getElementById('container'); //Variabile che richiama il container dei post nel DOM
 drawToDom(post) //Invoco la variabile
+
+
+
+// Variabili che racchiudono tutti i pulsanti 'mi piace' e i loro relativo numero di 'mi piace'
+const likeBtn = document.querySelectorAll('.js-like-button');
+const likeNumb = document.querySelectorAll('.js-likes-counter');
+
+for(let i = 0; i < likeBtn.length; i++) {
+    const thisBtn = likeBtn[i];
+    let likeNumbAsNumb = parseInt(likeNumb[i].innerHTML);
+    // Al click dell'utente sul pulsante 'mi piace' il pulsante cambia colore e il numero di like aumenta di uno 
+    thisBtn.addEventListener('click', 
+        function(event) {
+            event.preventDefault();
+            // Se il pulsante non ha classe 'like-button--liked' aumento di 1 il numero di like e coloro il pulsante
+            if(!this.classList.contains('like-button--liked')){    
+                likeNumbAsNumb++;
+                thisBtn.classList.add('like-button--liked');
+                likeNumb[i].innerHTML = likeNumbAsNumb;
+            }
+    });
+}
+
 
 // ----------------
 //  FUNCTION
@@ -51,7 +74,7 @@ function drawToDom (postArray) {
 
     // Per ogni oggetto nell'array appendo nel container del DOM il template
     for(let i = 0; i < post.length; i++){
-        let singleContent = post[i];
+        let singleContent = postArray[i];
         
         // Template nel DOM
         postContainer.innerHTML += `
@@ -90,3 +113,4 @@ function drawToDom (postArray) {
     }
 
 }
+
